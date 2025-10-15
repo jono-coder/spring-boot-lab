@@ -1,0 +1,80 @@
+### EASY
+GET http://LOCALHOST:8080/hello HTTP/2
+Accept: application/json, text/plain
+Cache-Control: no-cache
+Accept-Encoding: gzip
+X-Header: jono
+
+### Actuator :: info
+GET http://LOCALHOST:8080/actuator/info HTTP/2
+Accept: application/json
+Cache-Control: no-cache
+Accept-Encoding: gzip
+X-Header: jono
+
+### Actuator :: health
+GET http://LOCALHOST:8080/actuator/health HTTP/2
+Accept: application/json
+Cache-Control: no-cache
+Accept-Encoding: gzip
+X-Header: jono
+
+### Actuator :: startup
+GET http://LOCALHOST:8080/actuator/startup HTTP/2
+Accept: application/json
+Cache-Control: no-cache
+Accept-Encoding: gzip
+X-Header: jono
+
+### Actuator :: metrics
+GET http://LOCALHOST:8080/actuator/metrics/client.service.findAll2.timing
+Accept: application/json
+Cache-Control: no-cache
+Accept-Encoding: gzip
+X-Header: jono
+
+### Client :: findAll
+GET http://LOCALHOST:8080/client?page=0&size=10 HTTP/2
+Accept: application/json
+Cache-Control: no-cache
+Accept-Encoding: gzip
+X-Header: jono
+
+### Client :: findByAccountNo
+GET http://LOCALHOST:8080/client/ABC001 HTTP/2
+Accept: application/json
+Cache-Control: no-cache
+Accept-Encoding: gzip
+X-Header: jono
+
+### Client :: save
+POST http://LOCALHOST:8080/client HTTP/2
+content-type: application/json
+Cache-Control: no-cache
+Accept-Encoding: gzip
+X-Header: jono
+
+{
+}
+
+### ClientStatus :: active
+GET http://LOCALHOST:8080/clientStatus/active HTTP/2
+Accept: application/json
+Cache-Control: no-cache
+Accept-Encoding: gzip
+X-Header: jono
+
+### ClientStatus :: all
+GET http://LOCALHOST:8080/clientStatus/all HTTP/2
+Accept: application/json
+Cache-Control: no-cache
+Accept-Encoding: gzip
+X-Header: jono
+
+### Messaging :: test send
+GET http://LOCALHOST:8080/messaging/client/1 HTTP/2
+Accept: application/json
+Cache-Control: no-cache
+Accept-Encoding: gzip
+X-Header: jono
+

@@ -1,0 +1,73 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,startup
+  metrics:
+    enable:
+      all: true
+
+spring:
+  application:
+    name: spring-example-1
+  cache:
+    type: caffeine
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+    type: org.springframework.jdbc.datasource.DriverManagerDataSource  # disables pooling
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        cache:
+          region:
+            factory_class: org.hibernate.cache.jcache.JCacheRegionFactory
+          use_second_level_cache: true
+        jcache:
+          provider: org.ehcache.jsr107.EhcacheCachingProvider
+        default_batch_fetch_size: 50
+        javax.persistence.query.timeout: 5000  # milliseconds
+        jdbc:
+          batch_size: 50
+          batch_versioned_data: true
+          fetch_size: 500
+          time_zone: UTC
+          use_streams_for_binary: true
+        max_fetch_depth: 3
+        order_inserts: true
+        order_updates: true
+        query:
+          in_clause_parameter_padding: true
+          jpaql_strict_compliance: false
+        use_outer_join: true
+  profiles:
+    active: dev
+  threads:
+    virtual:
+      enabled: true
+
+server:
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json,application/xml
+    min-response-size: 2KB
+  http2:
+    enabled: true
+  netty:
+    connection-timeout: 10s
+  undertow:
+    always-set-keep-alive: true
+    buffer-size: 16384
+    direct-buffers: true
+    max-http-post-size: 20MB
+    max-headers: 100
+    no-request-timeout: 30s
+
+customInfo:
+  appName: Spring Example 1
+  maintainer: Jono
+  description: Example Spring Boot application

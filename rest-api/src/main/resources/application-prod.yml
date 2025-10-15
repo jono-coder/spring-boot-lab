@@ -1,0 +1,12 @@
+spring:
+  artemis:
+    mode: native
+    user: admin
+    password: admin
+    broker-url: ${SPRING_ARTEMIS_HOST:localhost}:${SPRING_ARTEMIS_PORT:61616}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  sql:
+    init:
+      mode: never
