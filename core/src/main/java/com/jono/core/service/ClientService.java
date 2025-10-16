@@ -13,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionSynchronization;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -53,14 +52,14 @@ public class ClientService {
     @Async("ioTaskExecutor")
     @Transactional(readOnly = true)
     public CompletableFuture<ClientDto> findByAccountNo(final String accountNo) {
-        final var entity = repository.findByAccountNo(accountNo);
+        final var entity = repository.findByAccountNo(accountNo).orElseThrow();
         final var result = transformer.toDto(entity);
         return CompletableFuture.completedFuture(result);
     }
 
     @Async("ioTaskExecutor")
     @Transactional(readOnly = true)
-    public CompletableFuture<Collection<? extends ClientDto>> findAll(final Integer page, final Integer size) {
+    public CompletableFuture<Collection<ClientDto>> findAll(final Integer page, final Integer size) {
         final Pageable pageable;
         if (page == null || size == null) {
             pageable = Pageable.unpaged();
@@ -72,7 +71,7 @@ public class ClientService {
     }
 
     @Timed("client.service.findAll2.timing")
-    public Collection<? extends ClientDto> findAll2(final Integer page, final Integer size) {
+    public Collection<ClientDto> findAll2(final Integer page, final Integer size) {
         final Pageable pageable;
         if (page == null || size == null) {
             pageable = Pageable.unpaged();
@@ -82,8 +81,8 @@ public class ClientService {
 
         try (final var scope = new StructuredTaskScope.ShutdownOnFailure()) {
             final var subtask1 = scope.fork(() -> ScopedValue.where(MY_ID, 1).call(() -> findThemAll(pageable)));
-            final var subtask2 = scope.fork(() -> ScopedValue.where(MY_ID, 2).call(() -> findThemAll(pageable)));
-            final var subtask3 = scope.fork(() -> {
+            final var _1 = scope.fork(() -> ScopedValue.where(MY_ID, 2).call(() -> findThemAll(pageable)));
+            final var _2 = scope.fork(() -> {
                 doSomething();
                 return null;
             });
@@ -103,11 +102,11 @@ public class ClientService {
         return repository.save(entity);
     }
 
-    protected Collection<? extends ClientDto> findThemAll(final Pageable pageable) {
+    protected Collection<ClientDto> findThemAll(final Pageable pageable) {
         LOGGER.info("thread={}", Thread.currentThread());
         LOGGER.info("id={}", MY_ID.get());
 
-        return transactionTemplate.execute((TransactionCallback<Collection<? extends ClientDto>>) _ -> {
+        return transactionTemplate.execute(_ -> {
             TransactionSynchronizationManager.registerSynchronization(
                     new TransactionSynchronization() {
                         @Override

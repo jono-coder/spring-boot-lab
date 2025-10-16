@@ -26,7 +26,7 @@ public class ClientTransformer implements Transformer<ClientEntity, ClientDto> {
     }
 
     @Override
-    public Collection<? extends ClientDto> toDtos(final Collection<? extends ClientEntity> entities) {
+    public Collection<ClientDto> toDtos(final Collection<ClientEntity> entities) {
         Objects.requireNonNull(entities);
 
         return entities.stream()
@@ -47,7 +47,7 @@ public class ClientTransformer implements Transformer<ClientEntity, ClientDto> {
     }
 
     @Override
-    public Collection<? extends ClientEntity> toEntities(final Collection<? extends ClientDto> dtos) {
+    public Collection<ClientEntity> toEntities(final Collection<ClientDto> dtos) {
         Objects.requireNonNull(dtos);
 
         return dtos.stream()

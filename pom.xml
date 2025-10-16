@@ -22,6 +22,7 @@
     <properties>
         <java.version>21</java.version>
         <maven-compiler-plugin.version>3.14.1</maven-compiler-plugin.version>
+        <mockito.version>5.19.0</mockito.version>
         <spring-boot.version>3.5.6</spring-boot.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -59,6 +60,42 @@
                     <configuration>
                         <compilerArguments>--enable-preview</compilerArguments>
                         <jvmArguments>--enable-preview</jvmArguments>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>build-info</goal>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                        <!--<execution>
+                            <id>process-aot</id>
+                            <goals>
+                                <goal>process-aot</goal>
+                            </goals>
+                        </execution>-->
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.5.4</version>
+                    <configuration>
+                        <argLine>
+                            --enable-preview
+                            -javaagent:${settings.localRepository}/org/mockito/mockito-core/${mockito.version}/mockito-core-${mockito.version}.jar
+                        </argLine>
+                    </configuration>
+                </plugin>
+
+                <!-- (Optional) Failsafe if you run integration tests -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>3.5.4</version>
+                    <configuration>
+                        <argLine>--enable-preview</argLine>
                     </configuration>
                 </plugin>
             </plugins>

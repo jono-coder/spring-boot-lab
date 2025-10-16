@@ -7,6 +7,8 @@ import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "client")
 @Data
@@ -48,14 +50,12 @@ public class ClientEntity {
         if (this == obj) {
             return true;
         }
-        if (obj == null) {
-            return false;
-        }
-        if (!getClass().isAssignableFrom(obj.getClass())) {
+
+        if (!(obj instanceof final ClientEntity rhs)) {
             return false;
         }
 
-        return obj.equals(id);
+        return Objects.equals(id, rhs.id());
     }
 
     @Override

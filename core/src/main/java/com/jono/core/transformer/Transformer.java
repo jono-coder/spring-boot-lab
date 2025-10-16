@@ -6,10 +6,10 @@ public interface Transformer<Entity, Dto> {
 
     Dto toDto(Entity entity);
 
-    Collection<? extends Dto> toDtos(Collection<? extends Entity> entities);
+    Collection<Dto> toDtos(Collection<Entity> entities);
 
     Entity toEntity(Dto dto);
 
-    Collection<? extends Entity> toEntities(Collection<? extends Dto> dtos);
+    Collection<Entity> toEntities(Collection<Dto> dtos);
 
 }

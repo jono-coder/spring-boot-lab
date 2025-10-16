@@ -8,6 +8,8 @@ import lombok.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "ClientStatus")
 @Data
@@ -33,14 +35,12 @@ public class ClientStatusEntity implements IdDesc {
         if (this == obj) {
             return true;
         }
-        if (obj == null) {
-            return false;
-        }
-        if (!getClass().isAssignableFrom(obj.getClass())) {
+
+        if (!(obj instanceof final ClientStatusEntity rhs)) {
             return false;
         }
 
-        return obj.equals(id);
+        return Objects.equals(description, rhs.description());
     }
 
     @Override
