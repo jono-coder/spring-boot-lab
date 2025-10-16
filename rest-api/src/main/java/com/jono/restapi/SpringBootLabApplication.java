@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication(
         scanBasePackages = {
                 "com.jono.core",
+                "com.jono.graphql",
                 "com.jono.messaging",
                 "com.jono.restapi",
                 "com.jono.websocket"

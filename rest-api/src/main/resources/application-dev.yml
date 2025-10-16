@@ -6,10 +6,16 @@ spring:
       idle-timeout: 60000
       validation-timeout: 10000
       maximum-pool-size: 10
+
+  graphql:
+    graphiql:
+      enabled: true
+
   h2:
     console:
       enabled: true
       path: /h2-console
+
   jpa:
     defer-datasource-initialization: true
     hibernate:
@@ -19,6 +25,7 @@ spring:
 
 #logging:
 #  level:
+#    org.springframework.context.annotation: TRACE
 #    org.springframework.web.socket: DEBUG
 #    org.apache.activemq: DEBUG
 #    org.springframework.jms: DEBUG

@@ -22,6 +22,12 @@
         <!-- Depend on messaging -->
         <dependency>
             <groupId>com.jono</groupId>
+            <artifactId>graphql</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <!-- Depend on messaging -->
+        <dependency>
+            <groupId>com.jono</groupId>
             <artifactId>messaging</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
