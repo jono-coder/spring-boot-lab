@@ -8,6 +8,7 @@ import io.micrometer.core.annotation.Timed;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.slf4j.Logger;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
@@ -17,10 +18,14 @@ import org.springframework.transaction.support.TransactionSynchronization;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.StructuredTaskScope;
+import java.util.stream.IntStream;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -30,18 +35,21 @@ public class ClientService {
 
     private static final Logger LOGGER = getLogger(ClientService.class);
 
-    private static final ScopedValue<Integer> MY_ID = ScopedValue.newInstance();
+    public static final ScopedValue<Integer> MY_ID = ScopedValue.newInstance();
 
     private final TransactionTemplate transactionTemplate;
     private final ClientRepository repository;
     private final ClientTransformer transformer;
+    private final ObjectProvider<Worker> workerFactory;
 
     protected ClientService(final TransactionTemplate transactionTemplate,
                             final ClientRepository repository,
-                            final ClientTransformer transformer) {
+                            final ClientTransformer transformer,
+                            final ObjectProvider<Worker> workerFactory) {
         this.transactionTemplate = transactionTemplate;
         this.repository = repository;
         this.transformer = transformer;
+        this.workerFactory = workerFactory;
     }
 
     @Transactional(readOnly = true)
@@ -100,6 +108,32 @@ public class ClientService {
     public ClientEntity save(final @Valid @NotNull ClientDto clientDto) {
         final var entity = transformer.toEntity(clientDto);
         return repository.save(entity);
+    }
+
+    public List<String> doSomeWork() {
+        try (final var scope = new StructuredTaskScope.ShutdownOnFailure()) {
+            final var result = Collections.synchronizedList(new ArrayList<String>(100));
+
+            IntStream.range(0, 100).forEach(i ->
+
+                    scope.fork(() -> {
+                        ScopedValue.where(MY_ID, i).run(() -> {
+                            try {
+                                result.add(workerFactory.getObject().withValue("Task_" + i).call());
+                            } catch (final Exception e) {
+                                throw new RuntimeException(e);
+                            }
+                        });
+                        return null;
+                    }));
+
+            scope.join();
+            scope.throwIfFailed();
+
+            return result;
+        } catch (final Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     protected Collection<ClientDto> findThemAll(final Pageable pageable) {

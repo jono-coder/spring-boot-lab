@@ -14,6 +14,7 @@ import org.springframework.web.context.request.async.DeferredResult;
 import java.net.URI;
 import java.time.Duration;
 import java.util.Collection;
+import java.util.List;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -64,6 +65,15 @@ public class ClientController {
 
         return ResponseEntity.created(URI.create("client/" + entity.id()))
                              .build();
+    }
+
+    @GetMapping("doSomeWork")
+    public ResponseEntity<List<String>> doSomeWork() {
+        LOGGER.info("doSomeWork...");
+
+        final var data = clientService.doSomeWork();
+
+        return ResponseEntity.ok(data);
     }
 
 }

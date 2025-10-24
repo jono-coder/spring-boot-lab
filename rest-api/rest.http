@@ -19,6 +19,13 @@ Cache-Control: no-cache
 Accept-Encoding: gzip
 X-Header: jono
 
+### Actuator :: ratelimiters
+GET http://LOCALHOST:8080/actuator/ratelimiters HTTP/2
+Accept: application/json
+Cache-Control: no-cache
+Accept-Encoding: gzip
+X-Header: jono
+
 ### Actuator :: startup
 GET http://LOCALHOST:8080/actuator/startup HTTP/2
 Accept: application/json
@@ -42,6 +49,13 @@ X-Header: jono
 
 ### Client :: findByAccountNo
 GET http://LOCALHOST:8080/client/ABC001 HTTP/2
+Accept: application/json
+Cache-Control: no-cache
+Accept-Encoding: gzip
+X-Header: jono
+
+### Client :: doSomeWork
+GET http://LOCALHOST:8080/client/doSomeWork HTTP/2
 Accept: application/json
 Cache-Control: no-cache
 Accept-Encoding: gzip
