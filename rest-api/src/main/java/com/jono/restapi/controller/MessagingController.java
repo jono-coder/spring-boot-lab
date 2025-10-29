@@ -3,6 +3,7 @@ package com.jono.restapi.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.jono.core.service.ClientService;
 import com.jono.messaging.jms.MyJmsSender;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,7 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping("messaging")
+@PreAuthorize("isAuthenticated()")
 public class MessagingController {
 
     private final ClientService service;
