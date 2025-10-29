@@ -4,7 +4,7 @@
     <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
     <module name="rest-api" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.jono.restapi.SpringBootLabApplication" />
-    <option name="VM_PARAMETERS" value="-Xmx1G --enable-preview -DCOMMENTED_OUT.spring.devtools.restart.enabled=false -DCOMMENTED_OUT.spring.aot.enabled=true" />
+    <option name="VM_PARAMETERS" value="-Xmx1G --enable-preview -DXXXspring.devtools.restart.enabled=false -DXXXspring.aot.enabled=true" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>

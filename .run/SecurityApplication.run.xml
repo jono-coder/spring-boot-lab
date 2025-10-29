@@ -1,0 +1,17 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="SecurityApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+    <option name="ACTIVE_PROFILES" value="dev" />
+    <module name="security" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.jono.security.SecurityApplication" />
+    <option name="VM_PARAMETERS" value="-Xmx1G --enable-preview -Dspring.devtools.restart.enabled=false -Dspring.aot.enabled=true" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="com.jono.security.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
