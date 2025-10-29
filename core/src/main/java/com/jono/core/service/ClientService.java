@@ -1,5 +1,6 @@
 package com.jono.core.service;
 
+import com.jono.core.config.CacheName;
 import com.jono.core.dto.ClientDto;
 import com.jono.core.entity.ClientEntity;
 import com.jono.core.repository.ClientRepository;
@@ -9,6 +10,8 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
@@ -38,15 +41,20 @@ public class ClientService {
     public static final ScopedValue<Integer> MY_ID = ScopedValue.newInstance();
 
     private final TransactionTemplate transactionTemplate;
+    private final CacheManager cacheManager;
     private final ClientRepository repository;
     private final ClientTransformer transformer;
-    private final ObjectProvider<Worker> workerFactory;
+    private final ObjectProvider<? extends Worker> workerFactory;
+
+    private volatile Cache cache;
 
     protected ClientService(final TransactionTemplate transactionTemplate,
+                            final CacheManager cacheManager,
                             final ClientRepository repository,
                             final ClientTransformer transformer,
-                            final ObjectProvider<Worker> workerFactory) {
+                            final ObjectProvider<? extends Worker> workerFactory) {
         this.transactionTemplate = transactionTemplate;
+        this.cacheManager = cacheManager;
         this.repository = repository;
         this.transformer = transformer;
         this.workerFactory = workerFactory;
@@ -57,15 +65,20 @@ public class ClientService {
         return transformer.toDto(repository.findById(id).orElseThrow());
     }
 
-    @Async("ioTaskExecutor")
+    @Async
     @Transactional(readOnly = true)
     public CompletableFuture<ClientDto> findByAccountNo(final String accountNo) {
-        final var entity = repository.findByAccountNo(accountNo).orElseThrow();
-        final var result = transformer.toDto(entity);
+        final var result = getCache().get(accountNo, () -> {
+            LOGGER.trace("The accountNo '{}' is not in the cache, so retrieving from the database instead...", accountNo);
+
+            final var entity = repository.findByAccountNo(accountNo).orElseThrow();
+            return transformer.toDto(entity);
+        });
+
         return CompletableFuture.completedFuture(result);
     }
 
-    @Async("ioTaskExecutor")
+    @Async
     @Transactional(readOnly = true)
     public CompletableFuture<Collection<ClientDto>> findAll(final Integer page, final Integer size) {
         final Pageable pageable;
@@ -115,7 +128,6 @@ public class ClientService {
             final var result = Collections.synchronizedList(new ArrayList<String>(100));
 
             IntStream.range(0, 100).forEach(i ->
-
                     scope.fork(() -> {
                         ScopedValue.where(MY_ID, i).run(() -> {
                             try {
@@ -157,6 +169,24 @@ public class ClientService {
     @SuppressWarnings("MethodMayBeStatic")
     private void doSomething() {
         LOGGER.info("thread={}", Thread.currentThread());
+    }
+
+    private Cache getCache() {
+        var result = cache;
+        if (result == null) {
+            synchronized (this) {
+                result = cache;
+                if (result == null) {
+                    final var cacheName = CacheName.CLIENT.getCacheName();
+                    cache = cacheManager.getCache(cacheName);
+                    if (cache == null) {
+                        throw new RuntimeException("Cache '" + cacheName + "' not found");
+                    }
+                    result = cache;
+                }
+            }
+        }
+        return result;
     }
 
 }

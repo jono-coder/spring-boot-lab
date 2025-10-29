@@ -1,6 +1,6 @@
 package com.jono.core.service.constant;
 
-import com.jono.core.config.CaffeineConfig;
+import com.jono.core.config.CacheName;
 import com.jono.core.config.SpringContext;
 import jakarta.persistence.EntityManager;
 import org.hibernate.Session;
@@ -16,8 +16,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-@SuppressWarnings("ClassWithOnlyPrivateConstructors")
-public class ConstantProxy implements InvocationHandler {
+public final class ConstantProxy implements InvocationHandler {
 
     private static volatile Cache cache;
 
@@ -58,14 +57,16 @@ public class ConstantProxy implements InvocationHandler {
     }
 
     private static Cache getCache() {
-        if (cache == null) {
+        var result = cache;
+        if (result == null) {
             synchronized (ConstantProxy.class) {
-                if (cache == null) {
-                    cache = SpringContext.getBean(CacheManager.class).getCache(CaffeineConfig.ENTITY_CONSTANTS_CACHE_NAME);
+                result = cache;
+                if (result == null) {
+                    cache = result = SpringContext.getBean(CacheManager.class).getCache(CacheName.ENTITY_CONSTANTS.getCacheName());
                 }
             }
         }
-        return cache;
+        return result;
     }
 
     private ConstantProxy() {

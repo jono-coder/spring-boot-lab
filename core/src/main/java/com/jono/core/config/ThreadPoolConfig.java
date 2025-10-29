@@ -6,8 +6,6 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Semaphore;
 import java.util.concurrent.ThreadPoolExecutor;
 
 @Configuration
@@ -25,18 +23,6 @@ public class ThreadPoolConfig {
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy()); // Fallback to caller
         executor.initialize();
         return executor;
-    }
-
-    // Custom wrapper for I/O executor to apply Semaphore (uses virtual threads)
-    @Bean(name = "ioTaskExecutor")
-    public Executor ioTaskExecutor(final Semaphore ioSemaphore) {
-        return new SemaphoreGuardedExecutor(Executors.newVirtualThreadPerTaskExecutor(), ioSemaphore);
-    }
-
-    // Semaphore for I/O back pressure (e.g., 20 permits to match DB connection pool)
-    @Bean
-    public Semaphore ioSemaphore() {
-        return new Semaphore(20, true); // Fair Semaphore for FIFO order
     }
 
 }

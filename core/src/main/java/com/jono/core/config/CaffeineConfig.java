@@ -13,22 +13,26 @@ import java.time.Duration;
 @EnableCaching
 public class CaffeineConfig {
 
-    public static final String ENTITY_CONSTANTS_CACHE_NAME = "entity-constants";
-
     @Bean
     public CacheManager cacheManager() {
         final var manager = new CaffeineCacheManager();
         manager.setAllowNullValues(false);
+        manager.setAsyncCacheMode(true);
         manager.setCaffeine(Caffeine.newBuilder()
                                     .maximumSize(5_000)
                                     .expireAfterAccess(Duration.ofMinutes(10))
                                     .recordStats());
 
-        manager.registerCustomCache(ENTITY_CONSTANTS_CACHE_NAME, Caffeine.newBuilder()
-                                                                         .maximumSize(5_000)
-                                                                         .expireAfterAccess(Duration.ofHours(1))
-                                                                         .recordStats()
-                                                                         .build());
+        manager.registerCustomCache(CacheName.CLIENT.getCacheName(), Caffeine.newBuilder()
+                                                                             .maximumSize(100)
+                                                                             .expireAfterAccess(Duration.ofMinutes(1))
+                                                                             .recordStats()
+                                                                             .build());
+        manager.registerCustomCache(CacheName.ENTITY_CONSTANTS.getCacheName(), Caffeine.newBuilder()
+                                                                                       .maximumSize(5_000)
+                                                                                       .expireAfterAccess(Duration.ofHours(1))
+                                                                                       .recordStats()
+                                                                                       .build());
 
         return manager;
     }
