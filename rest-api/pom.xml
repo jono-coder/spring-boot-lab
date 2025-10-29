@@ -13,25 +13,26 @@
     <artifactId>rest-api</artifactId>
 
     <dependencies>
-        <!-- Depend on core -->
         <dependency>
             <groupId>com.jono</groupId>
             <artifactId>core</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-        <!-- Depend on messaging -->
+        <dependency>
+            <groupId>com.jono</groupId>
+            <artifactId>core-security</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>com.jono</groupId>
             <artifactId>graphql</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-        <!-- Depend on messaging -->
         <dependency>
             <groupId>com.jono</groupId>
             <artifactId>messaging</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-        <!-- Depend on websocket -->
         <dependency>
             <groupId>com.jono</groupId>
             <artifactId>websocket</artifactId>
@@ -45,7 +46,11 @@
             <optional>true</optional>
         </dependency>
 
-        <!-- Spring Boot web starter -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>

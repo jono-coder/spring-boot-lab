@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static com.jono.restapi.config.SecurityConfig.PUBLIC_ENDPOINT;
+
 @RestController
-@RequestMapping("clientStatus")
+@RequestMapping(PUBLIC_ENDPOINT + "/clientStatus")
 public class ClientStatusController {
 
     private final ClientStatusConstant clientStatusConstant;

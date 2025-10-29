@@ -3,92 +3,88 @@ GET http://LOCALHOST:8080/hello HTTP/2
 Accept: application/json, text/plain
 Cache-Control: no-cache
 Accept-Encoding: gzip
-X-Header: jono
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb25vIiwiaWF0IjoxNzYxNzQ0NjE5LCJleHAiOjE3NjIzNDk0MTksInR5cGUiOiJyZWZyZXNoIiwicm9sZXMiOlsiUk9MRV9VU0VSIl19.anAw5KMpLJBb1uQsUIuymNOt8pkLsXPYt1_uUDjga-0
 
 ### Actuator :: info
 GET http://LOCALHOST:8080/actuator/info HTTP/2
 Accept: application/json
 Cache-Control: no-cache
 Accept-Encoding: gzip
-X-Header: jono
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb25vIiwiaWF0IjoxNzYxNzQ0NjE5LCJleHAiOjE3NjIzNDk0MTksInR5cGUiOiJyZWZyZXNoIiwicm9sZXMiOlsiUk9MRV9VU0VSIl19.anAw5KMpLJBb1uQsUIuymNOt8pkLsXPYt1_uUDjga-0
 
 ### Actuator :: health
 GET http://LOCALHOST:8080/actuator/health HTTP/2
 Accept: application/json
 Cache-Control: no-cache
 Accept-Encoding: gzip
-X-Header: jono
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb25vIiwiaWF0IjoxNzYxNzQ0NjE5LCJleHAiOjE3NjIzNDk0MTksInR5cGUiOiJyZWZyZXNoIiwicm9sZXMiOlsiUk9MRV9VU0VSIl19.anAw5KMpLJBb1uQsUIuymNOt8pkLsXPYt1_uUDjga-0
 
 ### Actuator :: ratelimiters
 GET http://LOCALHOST:8080/actuator/ratelimiters HTTP/2
 Accept: application/json
 Cache-Control: no-cache
 Accept-Encoding: gzip
-X-Header: jono
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb25vIiwiaWF0IjoxNzYxNzQ0NjE5LCJleHAiOjE3NjIzNDk0MTksInR5cGUiOiJyZWZyZXNoIiwicm9sZXMiOlsiUk9MRV9VU0VSIl19.anAw5KMpLJBb1uQsUIuymNOt8pkLsXPYt1_uUDjga-0
 
 ### Actuator :: startup
 GET http://LOCALHOST:8080/actuator/startup HTTP/2
 Accept: application/json
 Cache-Control: no-cache
 Accept-Encoding: gzip
-X-Header: jono
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb25vIiwiaWF0IjoxNzYxNzQ0NjE5LCJleHAiOjE3NjIzNDk0MTksInR5cGUiOiJyZWZyZXNoIiwicm9sZXMiOlsiUk9MRV9VU0VSIl19.anAw5KMpLJBb1uQsUIuymNOt8pkLsXPYt1_uUDjga-0
 
 ### Actuator :: metrics
 GET http://LOCALHOST:8080/actuator/metrics/client.service.findAll2.timing
 Accept: application/json
 Cache-Control: no-cache
 Accept-Encoding: gzip
-X-Header: jono
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb25vIiwiaWF0IjoxNzYxNzQ0NjE5LCJleHAiOjE3NjIzNDk0MTksInR5cGUiOiJyZWZyZXNoIiwicm9sZXMiOlsiUk9MRV9VU0VSIl19.anAw5KMpLJBb1uQsUIuymNOt8pkLsXPYt1_uUDjga-0
 
 ### Client :: findAll
 GET http://LOCALHOST:8080/client?page=0&size=10 HTTP/2
 Accept: application/json
 Cache-Control: no-cache
 Accept-Encoding: gzip
-X-Header: jono
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb25vIiwiaWF0IjoxNzYxNzQ0NjE5LCJleHAiOjE3NjIzNDk0MTksInR5cGUiOiJyZWZyZXNoIiwicm9sZXMiOlsiUk9MRV9VU0VSIl19.anAw5KMpLJBb1uQsUIuymNOt8pkLsXPYt1_uUDjga-0
 
 ### Client :: findByAccountNo
 GET http://LOCALHOST:8080/client/ABC001 HTTP/2
 Accept: application/json
 Cache-Control: no-cache
 Accept-Encoding: gzip
-X-Header: jono
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb25vIiwiaWF0IjoxNzYxNzQ0NjE5LCJleHAiOjE3NjIzNDk0MTksInR5cGUiOiJyZWZyZXNoIiwicm9sZXMiOlsiUk9MRV9VU0VSIl19.anAw5KMpLJBb1uQsUIuymNOt8pkLsXPYt1_uUDjga-0
 
 ### Client :: doSomeWork
 GET http://LOCALHOST:8080/client/doSomeWork HTTP/2
 Accept: application/json
 Cache-Control: no-cache
 Accept-Encoding: gzip
-X-Header: jono
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb25vIiwiaWF0IjoxNzYxNzQ0NjE5LCJleHAiOjE3NjIzNDk0MTksInR5cGUiOiJyZWZyZXNoIiwicm9sZXMiOlsiUk9MRV9VU0VSIl19.anAw5KMpLJBb1uQsUIuymNOt8pkLsXPYt1_uUDjga-0
 
 ### Client :: save
 POST http://LOCALHOST:8080/client HTTP/2
 content-type: application/json
 Cache-Control: no-cache
 Accept-Encoding: gzip
-X-Header: jono
 
 {
 }
 
 ### ClientStatus :: active
-GET http://LOCALHOST:8080/clientStatus/active HTTP/2
+GET http://LOCALHOST:8080/public/clientStatus/active HTTP/2
 Accept: application/json
 Cache-Control: no-cache
 Accept-Encoding: gzip
-X-Header: jono
 
 ### ClientStatus :: all
-GET http://LOCALHOST:8080/clientStatus/all HTTP/2
+GET http://LOCALHOST:8080/public/clientStatus/all HTTP/2
 Accept: application/json
 Cache-Control: no-cache
 Accept-Encoding: gzip
-X-Header: jono
 
 ### Messaging :: test send
 GET http://LOCALHOST:8080/messaging/client/1 HTTP/2
 Accept: application/json
 Cache-Control: no-cache
 Accept-Encoding: gzip
-X-Header: jono
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb25vIiwiaWF0IjoxNzYxNzQ0NjE5LCJleHAiOjE3NjIzNDk0MTksInR5cGUiOiJyZWZyZXNoIiwicm9sZXMiOlsiUk9MRV9VU0VSIl19.anAw5KMpLJBb1uQsUIuymNOt8pkLsXPYt1_uUDjga-0

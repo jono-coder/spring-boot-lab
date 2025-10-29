@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.springframework.http.CacheControl;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.async.DeferredResult;
 
@@ -20,9 +21,12 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 @RestController
 @RequestMapping("client")
+@PreAuthorize("isAuthenticated()")
 public class ClientController {
 
     private static final Logger LOGGER = getLogger(ClientController.class);
+    private static final CacheControl FIND_ALL_CACHE_CONTROL = CacheControl.maxAge(Duration.ofSeconds(10)).mustRevalidate();
+    private static final CacheControl FIND_BY_ACCOUNT_NO_CACHE_CONTROL = CacheControl.maxAge(Duration.ofMinutes(5)).mustRevalidate();
 
     private final ClientService clientService;
 
@@ -35,7 +39,7 @@ public class ClientController {
                                                                    @RequestParam(value = "size", required = false) final Integer size) {
         final var data = clientService.findAll2(page, size);
         return ResponseEntity.ok()
-                             .cacheControl(CacheControl.maxAge(Duration.ofSeconds(10)).mustRevalidate())
+                             .cacheControl(FIND_ALL_CACHE_CONTROL)
                              .body(data);
     }
 
@@ -49,7 +53,7 @@ public class ClientController {
                              deferredResult.setErrorResult(error);
                          } else {
                              deferredResult.setResult(ResponseEntity.ok()
-                                                                    .cacheControl(CacheControl.maxAge(Duration.ofMinutes(5)).mustRevalidate())
+                                                                    .cacheControl(FIND_BY_ACCOUNT_NO_CACHE_CONTROL)
                                                                     .body(result));
                          }
                      });
@@ -71,9 +75,7 @@ public class ClientController {
     public ResponseEntity<List<String>> doSomeWork() {
         LOGGER.info("doSomeWork...");
 
-        final var data = clientService.doSomeWork();
-
-        return ResponseEntity.ok(data);
+        return ResponseEntity.ok(clientService.doSomeWork());
     }
 
 }

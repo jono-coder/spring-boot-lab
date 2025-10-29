@@ -3,21 +3,16 @@ management:
     web:
       exposure:
         include: health,info,metrics,startup
-  health:
-    ratelimiters:
-      enabled: true
   metrics:
     enable:
       all: true
 
 resilience4j:
-  ratelimiter:
+  bulkhead:
     instances:
-      dbTxLimit:
-        limitForPeriod: 10  # Max calls in the period
-        limitRefreshPeriod: 1s  # Sliding window (e.g., 1 second)
-        timeoutDuration: 300s  # Non-blocking; reject immediately if no permit
-        registerHealthIndicator: true  # For Actuator health checks
+      globalTxLimiter:
+        max-concurrent-calls: 5
+        max-wait-duration: 1m
 
 spring:
   application:

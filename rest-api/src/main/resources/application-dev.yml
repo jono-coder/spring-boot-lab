@@ -1,3 +1,6 @@
+jwt:
+  secret: "2G}[?B/ov*,90GJz|M(at.#`6U{-79`En9u.ts&"
+
 spring:
 
   datasource:
