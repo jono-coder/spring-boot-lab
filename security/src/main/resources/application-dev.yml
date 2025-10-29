@@ -1,0 +1,9 @@
+jwt:
+  secret: "2G}[?B/ov*,90GJz|M(at.#`6U{-79`En9u.ts&"
+  access-token-validity: 900      # 15 minutes
+  refresh-token-validity: 604800  # 7 days
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.security.oauth2.jwt: DEBUG

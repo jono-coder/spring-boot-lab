@@ -1,0 +1,9 @@
+### Security :: login
+POST http://LOCALHOST:8081/api/auth/login HTTP/2
+Content-Type: application/json
+Cache-Control: no-cache
+
+{
+"username": "jono",
+"password": "password"
+}

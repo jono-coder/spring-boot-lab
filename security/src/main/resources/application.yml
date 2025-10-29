@@ -1,0 +1,33 @@
+resilience4j:
+  bulkhead:
+    instances:
+      globalTxLimiter:
+        max-concurrent-calls: 5
+        max-wait-duration: 1m
+
+server:
+  port: 8081
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json,application/xml
+    min-response-size: 2KB
+  http2:
+    enabled: true
+  netty:
+    connection-timeout: 10s
+  undertow:
+    always-set-keep-alive: true
+    buffer-size: 16384
+    direct-buffers: true
+    max-http-post-size: 20MB
+    max-headers: 100
+    no-request-timeout: 30s
+
+spring:
+  main:
+    log-startup-info: true
+  profiles:
+    active: dev
+  threads:
+    virtual:
+      enabled: true
