@@ -1,8 +1,6 @@
 package com.jono.core.service;
 
 import com.jono.core.service.constant.ClientStatusConstant;
-import io.github.resilience4j.ratelimiter.RequestNotPermitted;
-import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
@@ -33,7 +31,6 @@ public class Worker implements Callable<String> {
     }
 
     @Transactional(readOnly = true)
-    @RateLimiter(name = "dbTxLimit", fallbackMethod = "fallbackOnRateLimit")
     @Override
     public String call() throws Exception {
         Thread.sleep(1_000);
@@ -41,13 +38,6 @@ public class Worker implements Callable<String> {
         //noinspection ResultOfMethodCallIgnored
         clientStatusConstant.active().description();
         return value + " :: done";
-    }
-
-    // Fallback: Called if rate limit exceeded (no tx starts)
-    @SuppressWarnings("MethodMayBeStatic")
-    private String fallbackOnRateLimit(final RequestNotPermitted ex) {
-        LOGGER.warn("Rate limit exceeded; Retrying later");
-        throw ex;
     }
 
 }
