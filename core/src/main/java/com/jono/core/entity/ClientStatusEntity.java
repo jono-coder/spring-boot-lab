@@ -5,8 +5,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import java.util.Objects;
 
@@ -16,13 +14,15 @@ import java.util.Objects;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @RequiredArgsConstructor
 @Cacheable
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class ClientStatusEntity implements IdDesc {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Integer id;
+
+    @Version
+    private Integer version;
 
     @Column(length = 100, nullable = false, unique = true)
     @NotNull

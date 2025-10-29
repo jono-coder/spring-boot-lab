@@ -22,6 +22,9 @@ public class ClientEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Version
+    private Integer version;
+
     @Column(length = 10, nullable = false, unique = true)
     @NonNull
     @NotBlank
