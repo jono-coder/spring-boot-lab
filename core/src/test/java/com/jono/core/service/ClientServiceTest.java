@@ -15,11 +15,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.concurrent.Callable;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -30,16 +33,16 @@ class ClientServiceTest {
 
     @Mock
     private ClientRepository clientRepository;
-
     @Mock
     private ClientStatusConstant clientStatusConstant;
-
     @Mock
     private ClientTransformer clientTransformer;
-
     @Mock
     private TransactionTemplate transactionTemplate;
-
+    @Mock
+    private CacheManager cacheManager;
+    @Mock
+    private Cache cache;
     @InjectMocks
     private ClientService clientService;
 
@@ -51,12 +54,19 @@ class ClientServiceTest {
     @BeforeEach
     void setup() {
         status = new ClientStatusEntity("blah");
-        statusDto = IdDescription.from(new ClientStatusEntity("blah"));
+        statusDto = IdDescription.from(status);
         lenient().when(clientStatusConstant.active()).thenReturn(status);
 
         client = new ClientEntity("123", "Test Client", clientStatusConstant.active());
         clientDto = new ClientDto(client.accountNo(), client.name(), IdDescription.from(client.status()));
         lenient().when(clientTransformer.toDto(client)).thenReturn(clientDto);
+
+        lenient().when(cacheManager.getCache(anyString())).thenReturn(cache);
+        lenient().when(cache.get(anyString(), any(Callable.class)))
+                 .thenAnswer(invocation -> {
+                     final Callable<?> callable = invocation.getArgument(1);
+                     return callable.call(); // call the repository code
+                 });
     }
 
     @Test
@@ -88,8 +98,7 @@ class ClientServiceTest {
     @Test
     @DisplayName("should return DTO from id lookup as client exists")
     void testFindClientById() {
-        final var client = new ClientEntity("123", "Test Client",
-                clientStatusConstant.active());
+        final var client = new ClientEntity("123", "Test Client", clientStatusConstant.active());
         final var clientDto = new ClientDto(client.accountNo(), client.name(), IdDescription.from(client.status()));
 
         when(clientTransformer.toDto(client)).thenReturn(clientDto);
