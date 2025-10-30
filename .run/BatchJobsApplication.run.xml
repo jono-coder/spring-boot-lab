@@ -3,7 +3,7 @@
     <option name="ACTIVE_PROFILES" value="dev" />
     <module name="batch-jobs" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.jono.batchjobs.BatchJobsApplication" />
-    <option name="VM_PARAMETERS" value="--enable-preview -Dspring.aot.enabled=true" />
+    <option name="VM_PARAMETERS" value="--enable-preview -DXXXspring.aot.enabled=true" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="com.jono.batchjobs.*" />

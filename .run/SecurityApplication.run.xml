@@ -3,7 +3,7 @@
     <option name="ACTIVE_PROFILES" value="dev" />
     <module name="security" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.jono.security.SecurityApplication" />
-    <option name="VM_PARAMETERS" value="-Xmx1G --enable-preview -Dspring.devtools.restart.enabled=false -Dspring.aot.enabled=true" />
+    <option name="VM_PARAMETERS" value="-Xmx1G --enable-preview -DXXXspring.devtools.restart.enabled=false -DXXXspring.aot.enabled=true" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="com.jono.security.*" />

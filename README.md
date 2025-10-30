@@ -17,25 +17,32 @@ This project is intended as a learning and experimentation platform for Spring B
 
 ## Features
 
+- Batch job example
 - Entity and Repository
-- REST API with sample endpoints
 - GraphQL API with queries and mutations
-- WebSocket server for push notifications
 - Messaging module (example: ActiveMQ)
+- REST API with sample endpoints
+- Security Auth for creating JWTs
+- WebSocket server for notifications
 - JGroups network notifications
+- Resilience4j Transaction limiter
 - Multi-module architecture for modular and reusable code
+- AOT if required
 
 ---
 
 ## Modules
 
-| Module      | Description                                           |
-|------------|-------------------------------------------------------|
-| `core`     | Shared entities, DTOs, and services                  |
-| `restapi`  | REST controllers and endpoints                        |
-| `graphql`  | GraphQL schema, resolvers, and DTO mappings          |
-| `messaging`| Messaging components (publish/subscribe examples)    |
-| `websocket`| WebSocket server and client handling                 |
+| Module         | Description                                       |
+|----------------|---------------------------------------------------|
+| `batchjobs`    | Batch jobs                                        |
+| `core`         | Shared entities, DTOs, and services               |
+| `coresecurity` | Shared security library                           |
+| `graphql`      | GraphQL schema, resolvers, and DTO mappings       |
+| `messaging`    | Messaging components (publish/subscribe examples) |
+| `restapi`      | REST controllers and endpoints                    |
+| `security`     | REST auth controller which yields JWTs            |
+| `websocket`    | WebSocket server and client handling              |
 
 ---
 

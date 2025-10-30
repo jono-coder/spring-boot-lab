@@ -1,5 +1,6 @@
 POST http://localhost:8080/graphql
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb25vIiwiaWF0IjoxNzYxNzQ4NTk5LCJleHAiOjE3NjE3NDk0OTksInR5cGUiOiJhY2Nlc3MiLCJyb2xlcyI6WyJST0xFX1VTRVIiXX0.gaaLFxtidhIZtgBFi85r_DSYEjgfLqts-h3LM0L5_C8
 
 {
   "query": "{ greeting(name: \"Jono\") }"
