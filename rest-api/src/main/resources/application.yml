@@ -16,7 +16,7 @@ resilience4j:
 
 spring:
   application:
-    name: spring-example-1
+    name: spring-boot-lab
   cache:
     type: caffeine
   datasource:
@@ -36,7 +36,7 @@ spring:
           use_second_level_cache: true
         jcache:
           provider: org.ehcache.jsr107.EhcacheCachingProvider
-        default_batch_fetch_size: 50
+        default_batch_fetch_size: 100
         javax.persistence.query.timeout: 5000  # milliseconds
         jdbc:
           batch_size: 50
