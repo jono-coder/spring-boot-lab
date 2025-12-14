@@ -5,6 +5,7 @@ import org.apache.activemq.broker.jmx.ManagementContext;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Profile;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
@@ -37,6 +38,7 @@ public class StompConfigDev implements WebSocketMessageBrokerConfigurer {
 
     // Customizes the autoconfigured embedded broker to expose STOMP over TCP
     @Bean(initMethod = "start", destroyMethod = "stop")
+    @Lazy
     public BrokerService broker() throws Exception {
         final var broker = new BrokerService();
         final var connectorUri = "stomp://localhost:" + activemqPort + "?transport.transformer=jms";

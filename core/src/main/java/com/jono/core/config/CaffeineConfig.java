@@ -5,6 +5,7 @@ import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.caffeine.CaffeineCacheManager;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
@@ -14,6 +15,7 @@ import java.time.Duration;
 public class CaffeineConfig {
 
     @Bean
+    @Lazy
     public CacheManager cacheManager() {
         final var manager = new CaffeineCacheManager();
         manager.setAllowNullValues(false);
