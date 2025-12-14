@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface ClientRepository extends JpaRepository<ClientEntity, Integer> {
 
     @Query("from ClientEntity order by accountNo")
-    @QueryHints({@QueryHint(name = "javax.persistence.query.timeout", value = "5000")})
+    @QueryHints(@QueryHint(name = "javax.persistence.query.timeout", value = "5000"))
     Slice<ClientEntity> findAllSortedByAccountNo(Pageable pageable);
 
     Optional<ClientEntity> findByAccountNo(String accountNo);

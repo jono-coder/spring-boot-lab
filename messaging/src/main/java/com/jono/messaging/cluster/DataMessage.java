@@ -4,6 +4,7 @@ import java.io.Serial;
 import java.io.Serializable;
 
 public final class DataMessage implements ClusterMessage, Serializable {
+
     @Serial
     private static final long serialVersionUID = 6570075437968445597L;
 
@@ -16,4 +17,5 @@ public final class DataMessage implements ClusterMessage, Serializable {
     public int[] payload() {
         return payload.clone();
     }
+
 }
