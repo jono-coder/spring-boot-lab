@@ -12,9 +12,9 @@
 
     <artifactId>core</artifactId>
 
-    <properties>
-        <hibernate.version>6.6.33.Final</hibernate.version>
-    </properties>
+<!--    <properties>-->
+<!--        <hibernate.version>6.6.33.Final</hibernate.version>-->
+<!--    </properties>-->
 
     <dependencies>
         <dependency>
